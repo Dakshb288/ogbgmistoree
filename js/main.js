@@ -472,34 +472,15 @@ function confirmPayment(accountId, title, price) {
     const account = accounts.find(acc => acc.id === accountId);
     if (!account) return;
 
-    // Create message with account details
-    const message = `🛍 New Payment Confirmation
-
-💰 Amount Paid: ₹${price}
-🆔 Order ID: ORD${accountId}-${Date.now()}
-
-✨ View Account Details: t.me/OgbgmiSTOREE_bot?start=view_${accountId}
-
-Please send the payment screenshot to confirm your order.`;
+    const message = `🛍 New Payment Confirmation\n\n💰 Amount Paid: ₹${price}\n🆔 Order ID: ORD${accountId}-${Date.now()}\n\n✨ View Account Details: t.me/OgbgmiSTOREE_bot?start=view_${accountId}\n\nPlease send the payment screenshot to confirm your order.`;
     
     // Close payment modal
     hideModal('payment-modal');
     
     // Open chat with pre-filled message
-    const encodedMessage = encodeURIComponent(message);
-    const telegramLink = `tg://msg?text=${encodedMessage}&to=dakshb556`;
-    
     if (window.Telegram?.WebApp) {
-        try {
-            // Try using Telegram's native method first
-            window.Telegram.WebApp.openTelegramLink(`https://t.me/dakshb556?text=${encodedMessage}`);
-        } catch (error) {
-            // Fallback to direct link
-            window.location.href = `https://t.me/dakshb556?text=${encodedMessage}`;
-        }
-    } else {
-        // If WebApp is not available, use direct link
-        window.location.href = `https://t.me/dakshb556?text=${encodedMessage}`;
+        const encodedMessage = encodeURIComponent(message);
+        window.Telegram.WebApp.openLink(`https://t.me/dakshb556?text=${encodedMessage}`);
     }
 }
 
@@ -809,9 +790,10 @@ function goToHome() {
 
 // Simplify Support function to direct chat
 function contactSupport() {
-    if (window.Telegram && window.Telegram.WebApp) {
-        // Open direct chat with your Telegram ID
-        window.Telegram.WebApp.openTelegramLink('https://t.me/dakshb556');
+    if (window.Telegram?.WebApp) {
+        const message = "Hi! I need help with my BGMI account purchase.";
+        const encodedMessage = encodeURIComponent(message);
+        window.Telegram.WebApp.openLink(`https://t.me/dakshb556?text=${encodedMessage}`);
     }
 }
 
