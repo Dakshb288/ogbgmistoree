@@ -48,8 +48,7 @@ let accounts = [];
 function showModal(modalId) {
     const modal = document.getElementById(modalId);
     modal.style.display = 'block';
-    // Force reflow
-    modal.offsetHeight;
+    modal.offsetHeight; // Force reflow
     modal.classList.add('active');
 }
 
@@ -58,7 +57,7 @@ function hideModal(modalId) {
     modal.classList.remove('active');
     setTimeout(() => {
         modal.style.display = 'none';
-    }, 300); // Match transition duration
+    }, 300);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -157,9 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
             id: 1,
             title: 'TEST',
             price: 199999,
-            images: [
-                './assets/accounts/does-anyone-know-who-this-is-some-people-say-its-cj-but-v0-3pk9b5dgj5va1.jpg.webp'
-            ],
+            images: ['./assets/accounts/does-anyone-know-who-this-is-some-people-say-its-cj-but-v0-3pk9b5dgj5va1.jpg.webp'],
             status: 'sold',
             level: 75,
             royalPass: true,
