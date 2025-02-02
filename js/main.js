@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: 'TEST',
             price: 199999,
             images: ['./assets/accounts/does-anyone-know-who-this-is-some-people-say-its-cj-but-v0-3pk9b5dgj5va1.jpg.webp'],
-            status: 'sold',
+            status: 'available',
             level: 75,
             royalPass: true,
             loginType: 'Facebook',
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 './assets/accounts/photo_2025-02-02_15-05-28.jpg',
                 './assets/accounts/photo_2025-02-02_14-17-51.jpg'
             ],
-            status: 'sold',
+            status: 'available',
             level: 75,
             royalPass: true,
             loginType: 'Facebook',
