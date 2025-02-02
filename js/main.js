@@ -1,3 +1,48 @@
+// Add this at the very start of your file, before any other code
+function checkTelegramWebApp() {
+    if (!window.Telegram || !window.Telegram.WebApp) {
+        // Not opened in Telegram, show error message
+        document.body.innerHTML = `
+            <div style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #000;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                text-align: center;
+            ">
+                <i class="fas fa-exclamation-circle" style="font-size: 48px; color: #ff3b30; margin-bottom: 20px;"></i>
+                <h1 style="color: #fff; font-family: var(--font-heading); margin-bottom: 15px;">Access Restricted</h1>
+                <p style="color: #808080; font-size: 16px; line-height: 1.5;">
+                    This store can only be accessed through Telegram.<br>
+                    Please open it using our Telegram bot:
+                </p>
+                <a href="https://t.me/OgbgmiSTOREE_bot" style="
+                    display: inline-block;
+                    margin-top: 20px;
+                    padding: 12px 24px;
+                    background: #0088cc;
+                    color: #fff;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    font-family: var(--font-heading);
+                ">
+                    <i class="fab fa-telegram"></i>
+                    Open in Telegram
+                </a>
+            </div>
+        `;
+        return false;
+    }
+    return true;
+}
+
 // Move these to global scope
 let accounts = [];
 function showModal(modalId) {
@@ -17,6 +62,11 @@ function hideModal(modalId) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if opened in Telegram
+    if (!checkTelegramWebApp()) {
+        return; // Stop execution if not in Telegram
+    }
+
     // Initialize Telegram WebApp
     try {
         const webapp = window.Telegram.WebApp;
