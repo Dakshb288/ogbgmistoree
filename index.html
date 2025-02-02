@@ -20,7 +20,38 @@
         </div>
     </header>
 
-    <!-- After header section -->
+    <!-- CTA Section -->
+    <div class="browse-cta">
+        <div class="cta-content">
+            <div class="cta-badges">
+                <div class="badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Trusted</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-award"></i>
+                    <span>Experienced</span>
+                </div>
+            </div>
+            <div class="cta-header">
+                <h2>WELCOME TO THE OG STORE</h2>
+                <p class="cta-subtitle">Low Rates • Secured Logins • Premium Accounts</p>
+            </div>
+            <div class="scroll-indicator">
+                <div class="swipe-hint">
+                    <span>Browse Collection</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+        <div class="cta-background"></div>
+    </div>
+
+    <!-- Trust Banner Section -->
     <div class="trust-banner">
         <div class="banner-background"></div>
         <div class="achievement-slider">
@@ -29,7 +60,7 @@
                     <div class="slide-content">
                         <i class="fas fa-check-circle"></i>
                         <div class="stat-content">
-                            <span class="stat-number">1000+</span>
+                            <span class="stat-number">100+</span>
                             <span class="stat-label">Accounts Sold</span>
                         </div>
                     </div>
@@ -38,7 +69,7 @@
                     <div class="slide-content">
                         <i class="fas fa-star"></i>
                         <div class="stat-content">
-                            <span class="stat-number">4.9/5</span>
+                            <span class="stat-number">5/5</span>
                             <span class="stat-label">Customer Rating</span>
                         </div>
                     </div>
@@ -66,25 +97,17 @@
         </div>
     </div>
 
-    <!-- Update the browse-cta section -->
-    <div class="browse-cta">
-        <div class="cta-content">
-            <div class="cta-header">
-                <h2>YOUR DREAM ACCOUNTS AWAIT</h2>
-            </div>
-            <p>Discover Premium Collections Below</p>
-            <div class="scroll-indicator">
-                <div class="arrow-down">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Main Content Area -->
     <main class="main-content">
         <!-- Home Tab Content -->
         <section id="home-tab" class="tab-content active">
+            <div class="filters-container">
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="available">Available</button>
+                    <button class="filter-btn" data-filter="sold">Sold</button>
+                </div>
+            </div>
             <div class="accounts-grid">
                 <!-- Account Card Template -->
                 <div class="account-card">
@@ -140,28 +163,6 @@
             </div>
         </section>
 
-        <!-- Search Tab Content -->
-        <section id="search-tab" class="tab-content">
-            <div class="search-container">
-                <div class="search-box">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="account-search" placeholder="Search accounts by level, outfits, skins...">
-                    <div class="search-filters">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="available">Available</button>
-                        <button class="filter-btn" data-filter="sold">Sold</button>
-                    </div>
-                </div>
-            </div>
-            <div class="search-results accounts-grid">
-                <!-- Search results will be populated here -->
-            </div>
-            <div class="no-results" style="display: none;">
-                <i class="fas fa-search"></i>
-                <p>No accounts found matching your search</p>
-            </div>
-        </section>
-
         <!-- Profile Tab Content -->
         <section id="profile-tab" class="tab-content">
             <div class="profile-container">
@@ -183,10 +184,6 @@
         <button class="nav-btn active" data-tab="home">
             <i class="fas fa-home"></i>
             <span>Home</span>
-        </button>
-        <button class="nav-btn" data-tab="search">
-            <i class="fas fa-search"></i>
-            <span>Search</span>
         </button>
         <button class="nav-btn" data-tab="profile">
             <i class="fas fa-user"></i>
