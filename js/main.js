@@ -472,7 +472,7 @@ function confirmPayment(accountId, title, price) {
     const account = accounts.find(acc => acc.id === accountId);
     if (!account) return;
 
-    // Create a simpler message with a link back to account details
+    // Create message with account details
     const message = `🛍 New Payment Confirmation
 
 💰 Amount Paid: ₹${price}
@@ -484,60 +484,6 @@ Please send the payment screenshot to confirm your order.`;
     
     // Close payment modal
     hideModal('payment-modal');
-    
-    // Mark account as sold
-    account.status = 'sold';
-    
-    // Update the UI to reflect the change
-    const accountsGrid = document.querySelector('.accounts-grid');
-    if (accountsGrid) {
-        // Re-render all accounts to update the UI
-        accountsGrid.innerHTML = accounts.map(acc => `
-            <div class="account-card visible" data-status="${acc.status}">
-                <div class="account-image" style="position: relative; aspect-ratio: 16/9; overflow: hidden;">
-                    <img src="${acc.images[0]}" alt="${acc.title}" 
-                        style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
-                    <div class="image-overlay"></div>
-                    <span class="status ${acc.status}">${acc.status.toUpperCase()}</span>
-                    <div class="account-meta">
-                        <span class="meta-item">
-                            <i class="fas fa-gamepad"></i>
-                            Level ${acc.level}
-                        </span>
-                        <span class="meta-item">
-                            <i class="fas fa-crown"></i>
-                            ${acc.royalPass ? 'RP Active' : 'No RP'}
-                        </span>
-                    </div>
-                </div>
-                <div class="account-details">
-                    <div class="title-section">
-                        <h3>${acc.title}</h3>
-                        <span class="verified-badge">
-                            <i class="fas ${acc.status === 'sold' ? 'fa-times' : 'fa-check-circle'}"
-                               style="color: ${acc.status === 'sold' ? '#ff3b30' : '#00ffa3'}"></i>
-                        </span>
-                    </div>
-                    <div class="price-section">
-                        <p class="price">₹${acc.price}</p>
-                        <span class="price-tag">${acc.status === 'sold' ? 'Sold Out' : 'Best Value'}</span>
-                    </div>
-                    <div class="action-buttons">
-                        ${acc.status === 'available' ? `
-                            <button class="btn-buy" onclick="initiatePayment(${acc.id})">
-                                <i class="fas fa-shopping-cart"></i>
-                                BUY NOW
-                            </button>
-                        ` : ''}
-                        <button class="btn-view" onclick="viewDetails(${acc.id})" style="${acc.status === 'sold' ? 'grid-column: 1 / -1;' : ''}">
-                            <i class="fas fa-eye"></i>
-                            VIEW DETAILS
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-    }
     
     // Open chat with pre-filled message
     if (window.Telegram && window.Telegram.WebApp) {
