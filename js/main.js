@@ -71,23 +71,31 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
         const webapp = window.Telegram.WebApp;
         webapp.ready();
-        webapp.expand(); // Expand the web app to full height
+        webapp.expand();
         
-        // Get user data and log it to see what we're receiving
+        // Get user data and log it for debugging
         const user = webapp.initDataUnsafe?.user;
         console.log('Telegram User Data:', user);
         
         // Update profile with Telegram data
         const usernameElement = document.getElementById('telegram-username');
-        if (user && usernameElement) {
-            if (user.username) {
-                usernameElement.textContent = '@' + user.username;
-            } else if (user.first_name) {
-                usernameElement.textContent = user.first_name;
-            } else {
-                usernameElement.textContent = 'User';
+        if (usernameElement) {
+            // Try to get username from Telegram's WebApp data
+            if (webapp.initDataUnsafe?.user?.username) {
+                usernameElement.textContent = '@' + webapp.initDataUnsafe.user.username;
+            } 
+            // Fallback to first name if username isn't available
+            else if (webapp.initDataUnsafe?.user?.first_name) {
+                usernameElement.textContent = webapp.initDataUnsafe.user.first_name;
+            }
+            // Default case
+            else {
+                usernameElement.textContent = '@user';
             }
         }
+
+        // Log the entire WebApp data for debugging
+        console.log('Full WebApp Data:', webapp.initDataUnsafe);
     } catch (error) {
         console.error('Telegram WebApp initialization error:', error);
     }
