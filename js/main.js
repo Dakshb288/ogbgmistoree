@@ -151,21 +151,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Initialize accounts data
+    // Initialize accounts data first
     accounts = [
         {
             id: 1,
-            title: 'Premium BGMI Account',
-            price: 2999,
-            background: 'linear-gradient(45deg, #FF416C, #FF4B2B)',
-            status: 'available',
+            title: 'TEST',
+            price: 199999,
+            images: [
+                './assets/accounts/does-anyone-know-who-this-is-some-people-say-its-cj-but-v0-3pk9b5dgj5va1.jpg.webp'
+            ],
+            status: 'sold',
             level: 75,
             royalPass: true,
-            images: [
-                'linear-gradient(45deg, #FF416C, #FF4B2B)',
-                'linear-gradient(45deg, #FF4B2B, #FF416C)',
-                'linear-gradient(45deg, #FF6B6B, #FF4B2B)'
-            ],
+            loginType: 'Facebook',
             details: {
                 'Account Level': '75',
                 'Royal Pass': 'Purchased',
@@ -174,46 +172,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Achievement Points': '3500+',
                 'Login Methods': '2 (Facebook + X)'
             },
-            description: 'Premium BGMI account with rare collectibles and high-value items. Features multiple legendary outfits and gun skins. Perfect for serious players looking for a well-maintained account with impressive stats.',
-            loginType: 'Facebook',
-            loginPlatforms: ['Facebook', 'X'],
-            loginId: 'premium.bgmi@gmail.com',
-            password: 'FB123#premium'
+            description: 'Testing hori hai bhayankar'
         },
         {
             id: 2,
-            title: 'Elite BGMI Account',
-            price: 3999,
-            background: 'linear-gradient(45deg, #7F00FF, #E100FF)',
-            status: 'sold',
-            level: 82,
-            royalPass: true,
+            title: 'SHINOBI LVL 5 + X SUIT LVL 1',
+            price: 9999,
             images: [
-                'linear-gradient(45deg, #7F00FF, #E100FF)',
-                'linear-gradient(45deg, #E100FF, #7F00FF)',
-                'linear-gradient(45deg, #B721FF, #7F00FF)'
+                './assets/accounts/photo_2025-02-02_15-05-28.jpg',
+                './assets/accounts/photo_2025-02-02_14-17-51.jpg'
             ],
+            status: 'available',
+            level: 75,
+            royalPass: true,
+            loginType: 'Facebook',
             details: {
-                'Account Level': '82',
+                'Account Level': '75',
                 'Royal Pass': 'Purchased',
-                'Mythic Outfits': '12',
-                'Gun Skins': '20+',
-                'Achievement Points': '4200+',
-                'Login Methods': '1 (X)'
+                'Mythic Outfits': '8',
+                'Gun Skins': '15+',
+                'Achievement Points': '3500+',
+                'Login Methods': '2 (Facebook + X)'
             },
-            description: 'Elite BGMI account featuring extensive collection of rare items and high achievement points. Includes multiple season Royal Pass rewards and exclusive gun skins.',
-            loginType: 'X',
-            loginPlatforms: ['X'],
-            loginId: 'elite.bgmi@gmail.com',
-            password: 'TW456#elite'
+            description: 'Premium BGMI account with rare collectibles.'
         }
     ];
 
-    // Update the createAccountCard function
-    function createAccountCard(account) {
-        return `
-            <div class="account-card" data-status="${account.status}">
-                <div class="account-image" style="background: ${account.background}">
+    // Render accounts immediately after initialization
+    const accountsGrid = document.querySelector('.accounts-grid');
+    if (accountsGrid) {
+        accountsGrid.innerHTML = accounts.map(account => `
+            <div class="account-card visible" data-status="${account.status}">
+                <div class="account-image" style="position: relative; aspect-ratio: 16/9; overflow: hidden;">
+                    <img src="${account.images[0]}" alt="${account.title}" 
+                        style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
                     <div class="image-overlay"></div>
                     <span class="status ${account.status}">${account.status.toUpperCase()}</span>
                     <div class="account-meta">
@@ -231,126 +223,102 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="title-section">
                         <h3>${account.title}</h3>
                         <span class="verified-badge">
-                            <i class="fas ${account.status === 'sold' ? 'fa-xmark' : 'fa-check-circle'}"></i>
-                        </span>
-                    </div>
-                    <div class="specs-section">
-                        <span class="spec-item">
-                            <i class="fas fa-gamepad"></i>
-                            Level ${account.level}
-                        </span>
-                        <span class="spec-item">
-                            <i class="fab ${getLoginIcon(account.loginType)}"></i>
-                            ${account.loginType}
+                            <i class="fas ${account.status === 'sold' ? 'fa-times' : 'fa-check-circle'}"
+                               style="color: ${account.status === 'sold' ? '#ff3b30' : '#00ffa3'}"></i>
                         </span>
                     </div>
                     <div class="price-section">
                         <p class="price">₹${account.price}</p>
-                        <span class="price-tag">Best Value</span>
+                        <span class="price-tag">${account.status === 'sold' ? 'Sold Out' : 'Best Value'}</span>
                     </div>
                     <div class="action-buttons">
-                        ${account.status === 'available' ? 
-                            `<button class="btn-buy" onclick="initiatePayment(${account.id})">
+                        ${account.status === 'available' ? `
+                            <button class="btn-buy" onclick="initiatePayment(${account.id})">
                                 <i class="fas fa-shopping-cart"></i>
                                 BUY NOW
-                            </button>` : ''
-                        }
-                        <button class="btn-view" onclick="viewDetails(${account.id})">
+                            </button>
+                        ` : ''}
+                        <button class="btn-view" onclick="viewDetails(${account.id})" style="${account.status === 'sold' ? 'grid-column: 1 / -1;' : ''}">
                             <i class="fas fa-eye"></i>
                             VIEW DETAILS
                         </button>
                     </div>
                 </div>
             </div>
-        `;
+        `).join('');
     }
-
-    // Function to render accounts
-    function renderAccounts(accounts) {
-        const accountsGrid = document.querySelector('.accounts-grid');
-        accountsGrid.innerHTML = accounts.map(account => createAccountCard(account)).join('');
-    }
-
-    // Initialize the app
-    renderAccounts(accounts);
 
     // Achievement Slider
     initAchievementSlider();
 
-    // Search functionality
-    const searchInput = document.getElementById('account-search');
-    const searchFilters = document.querySelectorAll('.search-filters .filter-btn');
-    const searchResults = document.querySelector('.search-results');
-    const noResults = document.querySelector('.no-results');
+    // Filter functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
     let currentFilter = 'all';
 
-    // Update search results based on input and filter
-    function updateSearchResults() {
-        const searchTerm = searchInput.value.toLowerCase();
+    function updateAccounts() {
         let filteredAccounts = accounts;
-
-        // Apply status filter
         if (currentFilter !== 'all') {
             filteredAccounts = accounts.filter(account => account.status === currentFilter);
         }
 
-        // Apply search term
-        if (searchTerm) {
-            filteredAccounts = filteredAccounts.filter(account => {
-                return (
-                    account.title.toLowerCase().includes(searchTerm) ||
-                    account.level.toString().includes(searchTerm) ||
-                    account.details['Mythic Outfits'].toLowerCase().includes(searchTerm) ||
-                    account.details['Gun Skins'].toLowerCase().includes(searchTerm) ||
-                    account.details['Achievement Points'].toLowerCase().includes(searchTerm)
-                );
-            });
-        }
-
-        // Update results with animation
-        if (filteredAccounts.length === 0) {
-            searchResults.style.display = 'none';
-            searchResults.classList.remove('visible');
-            noResults.style.display = 'block';
-        } else {
-            searchResults.style.display = 'grid';
-            searchResults.classList.remove('visible');
-            searchResults.innerHTML = filteredAccounts.map(account => createAccountCard(account)).join('');
-            
-            // Force reflow
-            searchResults.offsetHeight;
-            
-            // Add visible class to trigger animation
-            searchResults.classList.add('visible');
-            noResults.style.display = 'none';
-        }
+        accountsGrid.innerHTML = filteredAccounts.map(account => `
+            <div class="account-card visible" data-status="${account.status}">
+                <div class="account-image" style="position: relative; aspect-ratio: 16/9; overflow: hidden;">
+                    <img src="${account.images[0]}" alt="${account.title}" 
+                        style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+                    <div class="image-overlay"></div>
+                    <span class="status ${account.status}">${account.status.toUpperCase()}</span>
+                    <div class="account-meta">
+                        <span class="meta-item">
+                            <i class="fas fa-gamepad"></i>
+                            Level ${account.level}
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-crown"></i>
+                            ${account.royalPass ? 'RP Active' : 'No RP'}
+                        </span>
+                    </div>
+                </div>
+                <div class="account-details">
+                    <div class="title-section">
+                        <h3>${account.title}</h3>
+                        <span class="verified-badge">
+                            <i class="fas ${account.status === 'sold' ? 'fa-times' : 'fa-check-circle'}"
+                               style="color: ${account.status === 'sold' ? '#ff3b30' : '#00ffa3'}"></i>
+                        </span>
+                    </div>
+                    <div class="price-section">
+                        <p class="price">₹${account.price}</p>
+                        <span class="price-tag">${account.status === 'sold' ? 'Sold Out' : 'Best Value'}</span>
+                    </div>
+                    <div class="action-buttons">
+                        ${account.status === 'available' ? `
+                            <button class="btn-buy" onclick="initiatePayment(${account.id})">
+                                <i class="fas fa-shopping-cart"></i>
+                                BUY NOW
+                            </button>
+                        ` : ''}
+                        <button class="btn-view" onclick="viewDetails(${account.id})" style="${account.status === 'sold' ? 'grid-column: 1 / -1;' : ''}">
+                            <i class="fas fa-eye"></i>
+                            VIEW DETAILS
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
     }
 
-    // Handle search input
-    searchInput.addEventListener('input', debounce(updateSearchResults, 300));
-
-    // Handle filter buttons
-    searchFilters.forEach(btn => {
+    filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            searchFilters.forEach(b => b.classList.remove('active'));
+            filterButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentFilter = btn.dataset.filter;
-            updateSearchResults();
+            updateAccounts();
         });
     });
 
-    // Debounce helper function
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
+    // Initial render
+    updateAccounts();
 
     // Hide/show banner based on active tab
     const trustBanner = document.querySelector('.trust-banner');
@@ -366,6 +334,56 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     updateProfile();
+
+    // Performance Optimizations
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            // Handle scroll events
+        }, 100);
+    });
+
+    // Use IntersectionObserver for lazy loading
+    const lazyLoadObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                lazyLoadObserver.unobserve(entry.target);
+            }
+        });
+    });
+
+    // Apply to account cards
+    document.querySelectorAll('.account-card').forEach(card => {
+        lazyLoadObserver.observe(card);
+    });
+
+    // Smooth tab switching
+    function switchTab(tabName) {
+        const currentTab = document.querySelector('.tab-content.active');
+        const newTab = document.getElementById(`${tabName}-tab`);
+        
+        if (currentTab) {
+            currentTab.style.opacity = '0';
+            setTimeout(() => {
+                currentTab.style.display = 'none';
+                currentTab.classList.remove('active');
+                showNewTab(newTab);
+            }, 300);
+        } else {
+            showNewTab(newTab);
+        }
+    }
+
+    function showNewTab(tab) {
+        tab.style.display = 'block';
+        tab.style.opacity = '0';
+        requestAnimationFrame(() => {
+            tab.style.opacity = '1';
+            tab.classList.add('active');
+        });
+    }
 });
 
 // Update the payment handling function
@@ -393,7 +411,10 @@ function initiatePayment(accountId) {
                         <div class="qr-section">
                             <h3>Scan QR Code</h3>
                             <div class="qr-code">
-                                <img src="assets/images/payment-qr.jpg" alt="Payment QR Code">
+                                <img src="./assets/qrcode/qrcode.png" 
+                                    alt="Payment QR Code"
+                                    onclick="showFullscreen('./assets/qrcode/qrcode.png')"
+                                    style="cursor: zoom-in;">
                             </div>
                         </div>
                         
@@ -402,8 +423,8 @@ function initiatePayment(accountId) {
                             <div class="upi-details">
                                 <div class="upi-id">
                                     <span class="label">UPI ID:</span>
-                                    <span class="value">your@upi</span>
-                                    <button class="copy-btn" onclick="copyToClipboard(this, 'your@upi')">
+                                    <span class="value">9289323556@fam</span>
+                                    <button class="copy-btn" onclick="copyToClipboard(this, '9289323556@upi')">
                                         <i class="fas fa-copy"></i>
                                     </button>
                                 </div>
@@ -416,28 +437,18 @@ function initiatePayment(accountId) {
                         <ol>
                             <li>Scan the QR code or use the UPI ID to pay</li>
                             <li>Pay the exact amount: ₹${account.price}</li>
-                            <li>Take a screenshot of payment confirmation</li>
-                            <li>Upload the screenshot below</li>
+                            <li>Take a screenshot of your payment</li>
+                            <li>Click "Confirm Payment" below</li>
+                            <li>Send the screenshot in the chat that opens</li>
                         </ol>
                     </div>
 
-                    <div class="screenshot-section">
-                        <h3>Upload Payment Screenshot</h3>
-                        <label class="screenshot-upload" for="screenshot-input">
-                            <input type="file" id="screenshot-input" accept="image/*" style="display: none;" onchange="handleScreenshot(this)">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Click to upload screenshot</p>
-                            <p class="file-hint">JPG, PNG files allowed</p>
-                        </label>
-                        <div class="screenshot-preview">
-                            <img id="screenshot-preview-img">
-                        </div>
+                    <div class="action-buttons">
+                        <button class="btn-confirm" onclick="confirmPayment(${account.id}, '${account.title}', ${account.price})">
+                            <i class="fas fa-check"></i>
+                            Confirm Payment
+                        </button>
                     </div>
-
-                    <button class="confirm-payment-btn" id="confirm-btn" onclick="confirmPayment(${account.id})" disabled>
-                        <i class="fas fa-check-circle"></i>
-                        Confirm Payment
-                    </button>
                 </div>
             </div>
         </div>
@@ -459,100 +470,89 @@ function copyToClipboard(button, text) {
     });
 }
 
-// Add screenshot handling function
-function handleScreenshot(input) {
-    const preview = document.querySelector('.screenshot-preview');
-    const previewImg = document.getElementById('screenshot-preview-img');
-    const confirmBtn = document.getElementById('confirm-btn');
-    
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        
-        reader.onload = function(e) {
-            previewImg.src = e.target.result;
-            preview.style.display = 'block';
-            confirmBtn.classList.add('active');
-            confirmBtn.disabled = false;
-        }
-        
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
 // Update confirmation function
-function confirmPayment(accountId) {
-    const screenshot = document.getElementById('screenshot-input').files[0];
-    if (!screenshot) {
-        alert('Please upload payment screenshot');
-        return;
-    }
-
-    const userInfo = window.Telegram.WebApp.initDataUnsafe?.user;
+function confirmPayment(accountId, title, price) {
     const account = accounts.find(acc => acc.id === accountId);
+    if (!account) return;
+
+    // Create a simpler message with a link back to account details
+    const message = `🛍 New Payment Confirmation
+
+💰 Amount Paid: ₹${price}
+🆔 Order ID: ORD${accountId}-${Date.now()}
+
+✨ View Account Details: t.me/OgbgmiSTOREE_bot?start=view_${accountId}
+
+Please send the payment screenshot to confirm your order.`;
     
-    // First send screenshot with order details
-    const formData = new FormData();
-    formData.append('chat_id', '6670332208');
-    formData.append('photo', screenshot);
-    formData.append('caption', `
-🛍 New Order Received!
-
-Account: ${account.title}
-Price: ₹${account.price}
-Level: ${account.level}
-
-Customer:
-@${userInfo?.username || 'No username'}
-ID: ${userInfo?.id || 'No ID'}
-Time: ${new Date().toLocaleString()}
-    `);
-
-    // Send screenshot with order details
-    fetch('https://api.telegram.org/bot7854142306:AAHOpy2QYrIzlqx34wQpXO6cVl-1EMFfjek/sendPhoto', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) throw new Error('Failed to send order');
-        // Show confirmation to user
-        showConfirmationMessage(document.getElementById('payment-modal'));
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error sending order. Please contact support.');
-    });
-}
-
-function showConfirmationMessage(modal) {
-    modal.querySelector('.payment-content').innerHTML = `
-        <div class="modal-header">
-            <h2>Thank You!</h2>
-            <button class="modal-close" onclick="hideModal('payment-modal')">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="confirmation-message">
-                <div class="success-animation">
-                    <i class="fas fa-check-circle"></i>
+    // Close payment modal
+    hideModal('payment-modal');
+    
+    // Mark account as sold
+    account.status = 'sold';
+    
+    // Update the UI to reflect the change
+    const accountsGrid = document.querySelector('.accounts-grid');
+    if (accountsGrid) {
+        // Re-render all accounts to update the UI
+        accountsGrid.innerHTML = accounts.map(acc => `
+            <div class="account-card visible" data-status="${acc.status}">
+                <div class="account-image" style="position: relative; aspect-ratio: 16/9; overflow: hidden;">
+                    <img src="${acc.images[0]}" alt="${acc.title}" 
+                        style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+                    <div class="image-overlay"></div>
+                    <span class="status ${acc.status}">${acc.status.toUpperCase()}</span>
+                    <div class="account-meta">
+                        <span class="meta-item">
+                            <i class="fas fa-gamepad"></i>
+                            Level ${acc.level}
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-crown"></i>
+                            ${acc.royalPass ? 'RP Active' : 'No RP'}
+                        </span>
+                    </div>
                 </div>
-                <h3>Order Placed Successfully!</h3>
-                <div class="confirmation-details">
-                    <p class="main-message">Thanks for purchasing from OG BGMI Store!</p>
-                    <div class="status-info">
-                        <div class="status-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Payment Under Review</span>
-                        </div>
-                        <div class="status-item">
-                            <i class="fas fa-telegram"></i>
-                            <span>We'll contact you on Telegram</span>
-                        </div>
+                <div class="account-details">
+                    <div class="title-section">
+                        <h3>${acc.title}</h3>
+                        <span class="verified-badge">
+                            <i class="fas ${acc.status === 'sold' ? 'fa-times' : 'fa-check-circle'}"
+                               style="color: ${acc.status === 'sold' ? '#ff3b30' : '#00ffa3'}"></i>
+                        </span>
+                    </div>
+                    <div class="price-section">
+                        <p class="price">₹${acc.price}</p>
+                        <span class="price-tag">${acc.status === 'sold' ? 'Sold Out' : 'Best Value'}</span>
+                    </div>
+                    <div class="action-buttons">
+                        ${acc.status === 'available' ? `
+                            <button class="btn-buy" onclick="initiatePayment(${acc.id})">
+                                <i class="fas fa-shopping-cart"></i>
+                                BUY NOW
+                            </button>
+                        ` : ''}
+                        <button class="btn-view" onclick="viewDetails(${acc.id})" style="${acc.status === 'sold' ? 'grid-column: 1 / -1;' : ''}">
+                            <i class="fas fa-eye"></i>
+                            VIEW DETAILS
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-    `;
+        `).join('');
+    }
+    
+    // Open chat with pre-filled message
+    if (window.Telegram && window.Telegram.WebApp) {
+        const encodedMessage = encodeURIComponent(message);
+        const telegramLink = `https://t.me/dakshb556?text=${encodedMessage}`;
+        
+        try {
+            window.Telegram.WebApp.openLink(telegramLink);
+        } catch (error) {
+            window.open(telegramLink, '_blank');
+        }
+    }
 }
 
 // Add helper function to navigate to profile
@@ -561,99 +561,147 @@ function goToProfile() {
     document.querySelector('[data-tab="profile"]').click();
 }
 
-// Update viewDetails function to remove duplicates
+// Update viewDetails function
 function viewDetails(accountId) {
     const account = accounts.find(a => a.id === accountId);
     if (!account) return;
 
     const modal = document.getElementById('details-modal');
-    const modalTitle = modal.querySelector('.modal-header h2');
-    const carousel = modal.querySelector('.account-carousel');
-    const detailsGrid = modal.querySelector('.details-grid');
-    const description = modal.querySelector('.description p');
-    const buyButton = modal.querySelector('.btn-buy');
-    const closeButton = modal.querySelector('.modal-close');
-
-    // Remove any existing login platforms section first
-    const existingPlatforms = modal.querySelector('.login-platforms');
-    if (existingPlatforms) {
-        existingPlatforms.remove();
-    }
-
-    // Add close button functionality
-    closeButton.onclick = () => hideModal('details-modal');
-
-    // Set title
-    modalTitle.textContent = account.title;
-
-    // Update carousel to use backgrounds instead of images
-    carousel.innerHTML = account.images.map((gradient, index) => `
-        <div class="carousel-item ${index === 0 ? 'active' : ''}">
-            <div class="carousel-gradient" style="background: ${gradient}"></div>
-        </div>
-    `).join('');
-
-    // Set details with simplified information
-    detailsGrid.innerHTML = Object.entries(account.details).map(([label, value]) => `
-        <div class="detail-item">
-            <i class="fas ${getIconForLabel(label)}"></i>
-            <div>
-                <div class="detail-label">${label}</div>
-                <div class="detail-value">${value}</div>
+    
+    // Update modal content
+    const modalContent = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Account Details</h2>
+                <button class="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-        </div>
-    `).join('');
-
-    // Add single login platforms section
-    const loginPlatformsHTML = `
-        <div class="login-platforms">
-            <h3>Login Platforms</h3>
-            <div class="platform-list">
-                ${account.loginPlatforms.map(platform => `
-                    <div class="platform-item">
-                        <i class="fab ${getLoginIcon(platform)}"></i>
-                        <span>${platform === 'x' ? 'X (Twitter)' : platform}</span>
+            <div class="modal-body">
+                <div class="account-images">
+                    <div class="account-carousel">
+                        ${account.images.map(img => `
+                            <div class="carousel-item">
+                                <img src="${img}" alt="${account.title}" onclick="showFullscreen('${img}')">
+                            </div>
+                        `).join('')}
                     </div>
-                `).join('')}
+                    <div class="carousel-nav">
+                        ${account.images.map((_, i) => `
+                            <span class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="details-grid">
+                    ${Object.entries(account.details).map(([label, value]) => `
+                        <div class="detail-item">
+                            <div class="detail-content">
+                                <div class="detail-label">${label}</div>
+                                <div class="detail-value">${value}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="description">
+                    <h3>Description</h3>
+                    <p>${account.description}</p>
+                </div>
+                ${account.status === 'available' ? `
+                    <div class="action-buttons">
+                        <button class="btn-buy" onclick="initiatePayment(${account.id})">
+                            <i class="fas fa-shopping-cart"></i>
+                            BUY NOW
+                        </button>
+                    </div>
+                ` : ''}
             </div>
         </div>
     `;
-    detailsGrid.insertAdjacentHTML('afterend', loginPlatformsHTML);
 
-    // Set description
-    description.textContent = account.description;
+    modal.innerHTML = modalContent;
+    
+    // Add close button event handler
+    const closeButton = modal.querySelector('.modal-close');
+    closeButton.addEventListener('click', () => hideModal('details-modal'));
+    
+    showModal('details-modal');
 
-    // Handle buy button visibility based on account status
-    if (account.status === 'sold') {
-        buyButton.style.display = 'none';
-    } else {
-        buyButton.style.display = 'block';
-        buyButton.onclick = () => initiatePayment(account.id);
+    // Initialize swipeable carousel
+    const carousel = modal.querySelector('.account-carousel');
+    const dots = modal.querySelectorAll('.carousel-dot');
+    let currentSlide = 0;
+    let startX;
+    let currentX;
+
+    // Touch events for mobile
+    carousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        currentX = carousel.style.transform ? 
+            parseInt(carousel.style.transform.replace('translateX(', '')) : 0;
+    });
+
+    carousel.addEventListener('touchmove', (e) => {
+        if (!startX) return;
+        const diff = e.touches[0].clientX - startX;
+        const newX = currentX + diff;
+        carousel.style.transform = `translateX(${newX}px)`;
+    });
+
+    carousel.addEventListener('touchend', (e) => {
+        const diff = e.changedTouches[0].clientX - startX;
+        const threshold = carousel.offsetWidth / 4;
+        
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0 && currentSlide > 0) {
+                currentSlide--;
+            } else if (diff < 0 && currentSlide < account.images.length - 1) {
+                currentSlide++;
+            }
+        }
+        
+        updateSlide();
+        startX = null;
+    });
+
+    // Click events for dots
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentSlide = index;
+            updateSlide();
+        });
+    });
+
+    function updateSlide() {
+        const offset = -currentSlide * 100;
+        carousel.style.transform = `translateX(${offset}%)`;
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
     }
 
-    showModal('details-modal');
+    // Initialize first slide
+    updateSlide();
 }
 
-// Helper function to get appropriate icons for labels
-function getIconForLabel(label) {
-    const icons = {
-        'Account Level': 'fa-gamepad',
-        'Royal Pass': 'fa-crown',
-        'Mythic Outfits': 'fa-tshirt',
-        'Gun Skins': 'fa-crosshairs',
-        'Achievement Points': 'fa-trophy'
+// Add this new function
+function showFullscreen(imageSrc) {
+    const fullscreenModal = document.getElementById('fullscreen-modal');
+    const fullscreenImage = document.getElementById('fullscreen-image');
+    
+    fullscreenImage.src = imageSrc;
+    showModal('fullscreen-modal');
+
+    // Close on clicking the close button
+    const closeBtn = fullscreenModal.querySelector('.modal-close');
+    closeBtn.onclick = () => hideModal('fullscreen-modal');
+
+    // Close on clicking outside the image
+    fullscreenModal.onclick = (e) => {
+        if (e.target === fullscreenModal) {
+            hideModal('fullscreen-modal');
+        }
     };
-    return icons[label] || 'fa-info-circle';
 }
-
-// Update the carousel dots when scrolling
-document.querySelector('.account-carousel').addEventListener('scroll', function() {
-    const index = Math.round(this.scrollLeft / this.offsetWidth);
-    const dots = document.querySelectorAll('.carousel-dot');
-    dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-    });
-});
 
 // Update Achievement Slider
 function initAchievementSlider() {
@@ -932,3 +980,90 @@ function getLoginIcon(loginType) {
         default: return 'fa-user';
     }
 }
+
+// Account Management System
+const ACCOUNTS_DATA = {
+    available: [
+        {
+            id: 1,
+            title: 'Premium BGMI Account',
+            price: 2999,
+            images: [
+                'assets/accounts/acc1-main.jpg',    // Main display image
+                'assets/accounts/acc1-inventory.jpg',// Inventory screenshot
+                'assets/accounts/acc1-outfits.jpg', // Outfits collection
+                'assets/accounts/acc1-weapons.jpg'  // Weapon skins
+            ],
+            status: 'available',
+            level: 75,
+            royalPass: true,
+            loginPlatforms: ['Facebook', 'X'],
+            details: {
+                'Account Level': '75',
+                'Royal Pass': 'Purchased',
+                'Mythic Outfits': '8',
+                'Gun Skins': '15+',
+                'Achievement Points': '3500+',
+                'Login Methods': '2 (Facebook + X)'
+            },
+            description: 'Premium BGMI account with rare collectibles.'
+        }
+    ],
+    sold: []
+};
+
+// Function to add new account
+function addAccount(accountData) {
+    const newId = ACCOUNTS_DATA.available.length + ACCOUNTS_DATA.sold.length + 1;
+    const newAccount = {
+        id: newId,
+        ...accountData,
+        status: 'available'
+    };
+    
+    ACCOUNTS_DATA.available.push(newAccount);
+    renderAccounts(getAllAccounts());
+}
+
+// Function to mark account as sold
+function markAsSold(accountId) {
+    const accountIndex = ACCOUNTS_DATA.available.findIndex(acc => acc.id === accountId);
+    if (accountIndex !== -1) {
+        const account = ACCOUNTS_DATA.available[accountIndex];
+        account.status = 'sold';
+        ACCOUNTS_DATA.sold.push(account);
+        ACCOUNTS_DATA.available.splice(accountIndex, 1);
+        renderAccounts(getAllAccounts());
+    }
+}
+
+// Get all accounts
+function getAllAccounts() {
+    return [...ACCOUNTS_DATA.available, ...ACCOUNTS_DATA.sold];
+}
+
+// Example: Adding a new account
+addAccount({
+    title: 'Elite BGMI Account',
+    price: 3999,
+    images: [
+        'linear-gradient(45deg, #7F00FF, #E100FF)',
+        'linear-gradient(45deg, #E100FF, #7F00FF)',
+        'linear-gradient(45deg, #B721FF, #7F00FF)'
+    ],
+    level: 82,
+    royalPass: true,
+    loginPlatforms: ['X'],
+    details: {
+        'Account Level': '82',
+        'Royal Pass': 'Purchased',
+        'Mythic Outfits': '12',
+        'Gun Skins': '20+',
+        'Achievement Points': '4200+',
+        'Login Methods': '1 (X)'
+    },
+    description: 'Elite BGMI account with rare items.'
+});
+
+// Example: Marking an account as sold
+markAsSold(1); // Pass the account ID
