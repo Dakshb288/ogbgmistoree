@@ -811,10 +811,41 @@ function goToHome() {
     document.querySelector('[data-tab="home"]').click();
 }
 
-// Support function
+// Update Support function
 function contactSupport() {
     if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.openTelegramLink('https://t.me/OgbgmiSTOREE_bot');
+        // Get user info
+        const userInfo = window.Telegram.WebApp.initDataUnsafe?.user;
+        
+        // Format support request message
+        const message = `
+📞 Support Request
+
+From: @${userInfo?.username || 'No username'}
+User ID: ${userInfo?.id || 'No ID'}
+Time: ${new Date().toLocaleString()}
+`;
+
+        // Send to your chat ID
+        fetch(`https://api.telegram.org/bot7854142306:AAHOpy2QYrIzlqx34wQpXO6cVl-1EMFfjek/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: '6670332208',
+                text: message,
+                parse_mode: 'HTML'
+            })
+        })
+        .then(() => {
+            alert('Support request sent! We will contact you shortly.');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Fallback to direct chat if API fails
+            window.Telegram.WebApp.openTelegramLink('https://t.me/OgbgmiSTOREE_bot');
+        });
     }
 }
 
