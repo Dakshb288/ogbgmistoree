@@ -170,28 +170,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Login Methods': '2 (Facebook + X)'
             },
             description: 'Testing hori hai bhayankar'
-        },
-        {
-            id: 2,
-            title: 'SHINOBI LVL 5 + X SUIT LVL 1',
-            price: 9999,
-            images: [
-                './assets/accounts/photo_2025-02-02_15-05-28.jpg',
-                './assets/accounts/photo_2025-02-02_14-17-51.jpg'
-            ],
-            status: 'available',
-            level: 75,
-            royalPass: true,
-            loginType: 'Facebook',
-            details: {
-                'Account Level': '75',
-                'Royal Pass': 'Purchased',
-                'Mythic Outfits': '8',
-                'Gun Skins': '15+',
-                'Achievement Points': '3500+',
-                'Login Methods': '2 (Facebook + X)'
-            },
-            description: 'Premium BGMI account with rare collectibles.'
         }
     ];
 
