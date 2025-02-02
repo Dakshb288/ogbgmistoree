@@ -18,16 +18,28 @@ function hideModal(modalId) {
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Telegram WebApp
-    if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.ready();
+    try {
+        const webapp = window.Telegram.WebApp;
+        webapp.ready();
+        webapp.expand(); // Expand the web app to full height
         
-        // Get user data
-        const user = window.Telegram.WebApp.initDataUnsafe?.user;
+        // Get user data and log it to see what we're receiving
+        const user = webapp.initDataUnsafe?.user;
+        console.log('Telegram User Data:', user);
         
         // Update profile with Telegram data
-        if (user) {
-            document.getElementById('telegram-username').textContent = user.username ? '@' + user.username : 'User';
+        const usernameElement = document.getElementById('telegram-username');
+        if (user && usernameElement) {
+            if (user.username) {
+                usernameElement.textContent = '@' + user.username;
+            } else if (user.first_name) {
+                usernameElement.textContent = user.first_name;
+            } else {
+                usernameElement.textContent = 'User';
+            }
         }
+    } catch (error) {
+        console.error('Telegram WebApp initialization error:', error);
     }
 
     // Navigation functionality
@@ -743,7 +755,9 @@ function goToHome() {
 
 // Support function
 function contactSupport() {
-    window.Telegram.WebApp.openTelegramLink('https://t.me/your_support_username');
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.openTelegramLink('https://t.me/OgbgmiSTOREE_bot');
+    }
 }
 
 // FAQ function
