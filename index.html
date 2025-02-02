@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OG BGMI Store</title>
+    <link rel="stylesheet" href="/ogbgmistore/css/style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Add Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <h1>OG BGMI STORE</h1>
+        </div>
+    </header>
+
+    <!-- After header section -->
+    <div class="trust-banner">
+        <div class="banner-background"></div>
+        <div class="achievement-slider">
+            <div class="achievement-track">
+                <div class="achievement-slide">
+                    <div class="slide-content">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="stat-content">
+                            <span class="stat-number">1000+</span>
+                            <span class="stat-label">Accounts Sold</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="achievement-slide">
+                    <div class="slide-content">
+                        <i class="fas fa-star"></i>
+                        <div class="stat-content">
+                            <span class="stat-number">4.9/5</span>
+                            <span class="stat-label">Customer Rating</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="achievement-slide">
+                    <div class="slide-content">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="stat-content">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Secure Delivery</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="achievement-slide">
+                    <div class="slide-content">
+                        <i class="fas fa-trophy"></i>
+                        <div class="stat-content">
+                            <span class="stat-number">#1</span>
+                            <span class="stat-label">Trusted BGMI Store</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-dots"></div>
+        </div>
+    </div>
+
+    <!-- Update the browse-cta section -->
+    <div class="browse-cta">
+        <div class="cta-content">
+            <div class="cta-header">
+                <h2>YOUR DREAM ACCOUNTS AWAIT</h2>
+            </div>
+            <p>Discover Premium Collections Below</p>
+            <div class="scroll-indicator">
+                <div class="arrow-down">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Home Tab Content -->
+        <section id="home-tab" class="tab-content active">
+            <div class="accounts-grid">
+                <!-- Account Card Template -->
+                <div class="account-card">
+                    <div class="account-image">
+                        <img src="assets/images/placeholder.jpg" alt="BGMI Account">
+                        <div class="image-overlay"></div>
+                        <span class="status available">AVAILABLE</span>
+                        <div class="account-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-gamepad"></i>
+                                Level 75
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-gun"></i>
+                                Royal Pass
+                            </span>
+                        </div>
+                    </div>
+                    <div class="account-details">
+                        <div class="title-section">
+                            <h3>Premium BGMI Account</h3>
+                            <span class="verified-badge">
+                                <i class="fas fa-check-circle"></i>
+                            </span>
+                        </div>
+                        <div class="specs-section">
+                            <span class="spec-item">
+                                <i class="fas fa-shirt"></i>
+                                Rare Outfits: 25+
+                            </span>
+                            <span class="spec-item">
+                                <i class="fas fa-crosshairs"></i>
+                                Gun Skins: 15+
+                            </span>
+                        </div>
+                        <div class="price-section">
+                            <p class="price">₹2,999</p>
+                            <span class="price-tag">Best Value</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-buy">
+                                <i class="fas fa-shopping-cart"></i>
+                                BUY NOW
+                            </button>
+                            <button class="btn-view">
+                                <i class="fas fa-eye"></i>
+                                VIEW DETAILS
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- More account cards will be added dynamically -->
+            </div>
+        </section>
+
+        <!-- Search Tab Content -->
+        <section id="search-tab" class="tab-content">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="account-search" placeholder="Search accounts by level, outfits, skins...">
+                    <div class="search-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="available">Available</button>
+                        <button class="filter-btn" data-filter="sold">Sold</button>
+                    </div>
+                </div>
+            </div>
+            <div class="search-results accounts-grid">
+                <!-- Search results will be populated here -->
+            </div>
+            <div class="no-results" style="display: none;">
+                <i class="fas fa-search"></i>
+                <p>No accounts found matching your search</p>
+            </div>
+        </section>
+
+        <!-- Profile Tab Content -->
+        <section id="profile-tab" class="tab-content">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-info">
+                        <h2 id="telegram-username">@username</h2>
+                    </div>
+                </div>
+                <button class="contact-button" onclick="contactSupport()">
+                    <i class="fas fa-headset"></i>
+                    CONTACT SUPPORT
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-btn active" data-tab="home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </button>
+        <button class="nav-btn" data-tab="search">
+            <i class="fas fa-search"></i>
+            <span>Search</span>
+        </button>
+        <button class="nav-btn" data-tab="profile">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </button>
+    </nav>
+
+    <!-- Modals -->
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Account Details</h2>
+                <button class="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="account-images">
+                    <div class="account-carousel">
+                        <!-- Images will be added dynamically -->
+                    </div>
+                    <div class="carousel-nav">
+                        <!-- Dots will be added dynamically -->
+                    </div>
+                </div>
+                <div class="details-grid">
+                    <!-- Details will be added dynamically -->
+                </div>
+                <div class="description">
+                    <h3>Description</h3>
+                    <p></p>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-buy">
+                        <i class="fas fa-shopping-cart"></i>
+                        BUY NOW
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update the payment modal -->
+    <div id="payment-modal" class="modal">
+        <!-- Content will be dynamically inserted here -->
+    </div>
+
+    <script src="/ogbgmistore/js/main.js"></script>
+</body>
+</html> 
