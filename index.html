@@ -13,6 +13,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Add this right after <body> tag, before any other content -->
+    <div class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <div class="logo-ring"></div>
+                <div class="logo-ring"></div>
+                <div class="logo-ring"></div>
+                <div class="logo-icon">
+                    <i class="fas fa-crosshairs"></i>
+                    <i class="fas fa-parachute-box"></i>
+                </div>
+            </div>
+            <div class="splash-text">
+                <h1 class="splash-title">OG BGMI STORE</h1>
+                <p class="splash-subtitle">#YOURTRUSTISOURPROFIT</p>
+            </div>
+            <div class="splash-loader">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="splash-overlay"></div>
+        <div class="splash-grid"></div>
+    </div>
+
     <!-- Header Section -->
     <header class="header">
         <div class="header-content">
@@ -229,6 +255,16 @@
     <!-- Update the payment modal -->
     <div id="payment-modal" class="modal">
         <!-- Content will be dynamically inserted here -->
+    </div>
+
+    <!-- Add this after your other modals -->
+    <div id="fullscreen-modal" class="modal fullscreen-modal">
+        <div class="fullscreen-content">
+            <img src="" alt="Fullscreen view" id="fullscreen-image">
+            <button class="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
     </div>
 
     <!-- Add Telegram WebApp SDK -->
