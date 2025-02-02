@@ -17,6 +17,19 @@ function hideModal(modalId) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Telegram WebApp
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.ready();
+        
+        // Get user data
+        const user = window.Telegram.WebApp.initDataUnsafe?.user;
+        
+        // Update profile with Telegram data
+        if (user) {
+            document.getElementById('telegram-username').textContent = user.username ? '@' + user.username : 'User';
+        }
+    }
+
     // Navigation functionality
     const navButtons = document.querySelectorAll('.nav-btn');
     const tabContents = document.querySelectorAll('.tab-content');
