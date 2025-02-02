@@ -398,8 +398,8 @@ function initiatePayment(accountId) {
                             <div class="upi-details">
                                 <div class="upi-id">
                                     <span class="label">UPI ID:</span>
-                                    <span class="value">9289323556@fam</span>
-                                    <button class="copy-btn" onclick="copyToClipboard(this, '9289323556@upi')">
+                                    <span class="value">anasog@fam</span>
+                                    <button class="copy-btn" onclick="copyToClipboard(this, 'anasog@fam')">
                                         <i class="fas fa-copy"></i>
                                     </button>
                                 </div>
@@ -458,7 +458,7 @@ function confirmPayment(accountId, title, price) {
     // Open chat with pre-filled message
     if (window.Telegram?.WebApp) {
         const encodedMessage = encodeURIComponent(message);
-        window.Telegram.WebApp.openLink(`https://t.me/dakshb556?text=${encodedMessage}`);
+        window.Telegram.WebApp.openLink(`https://t.me/Ehean4s?text=${encodedMessage}`);
     }
 }
 
@@ -771,7 +771,7 @@ function contactSupport() {
     if (window.Telegram?.WebApp) {
         const message = "Hi! I need help with my BGMI account purchase.";
         const encodedMessage = encodeURIComponent(message);
-        window.Telegram.WebApp.openLink(`https://t.me/dakshb556?text=${encodedMessage}`);
+        window.Telegram.WebApp.openLink(`https://t.me/Ehean4s?text=${encodedMessage}`);
     }
 }
 
