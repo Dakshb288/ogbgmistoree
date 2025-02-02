@@ -486,15 +486,20 @@ Please send the payment screenshot to confirm your order.`;
     hideModal('payment-modal');
     
     // Open chat with pre-filled message
-    if (window.Telegram && window.Telegram.WebApp) {
-        const encodedMessage = encodeURIComponent(message);
-        const telegramLink = `https://t.me/dakshb556?text=${encodedMessage}`;
-        
+    const encodedMessage = encodeURIComponent(message);
+    const telegramLink = `tg://msg?text=${encodedMessage}&to=dakshb556`;
+    
+    if (window.Telegram?.WebApp) {
         try {
-            window.Telegram.WebApp.openLink(telegramLink);
+            // Try using Telegram's native method first
+            window.Telegram.WebApp.openTelegramLink(`https://t.me/dakshb556?text=${encodedMessage}`);
         } catch (error) {
-            window.open(telegramLink, '_blank');
+            // Fallback to direct link
+            window.location.href = `https://t.me/dakshb556?text=${encodedMessage}`;
         }
+    } else {
+        // If WebApp is not available, use direct link
+        window.location.href = `https://t.me/dakshb556?text=${encodedMessage}`;
     }
 }
 
