@@ -155,9 +155,9 @@ document.addEventListener('DOMContentLoaded', function() {
         {
             id: 1,
             title: 'TEST',
-            price: 199999,
+            price: 999999,
             images: ['./assets/accounts/does-anyone-know-who-this-is-some-people-say-its-cj-but-v0-3pk9b5dgj5va1.jpg.webp'],
-            status: 'sold',
+            status: 'available',
             level: 75,
             royalPass: true,
             loginType: 'Facebook',
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Login Methods': '2 (Facebook + X)'
             },
             description: 'Testing hori hai bhayankar'
-        }
+        },
     ];
 
     // Render accounts immediately after initialization
@@ -398,8 +398,8 @@ function initiatePayment(accountId) {
                             <div class="upi-details">
                                 <div class="upi-id">
                                     <span class="label">UPI ID:</span>
-                                    <span class="value">anasog@fam</span>
-                                    <button class="copy-btn" onclick="copyToClipboard(this, 'anasog@fam')">
+                                    <span class="value">9289323556@fam</span>
+                                    <button class="copy-btn" onclick="copyToClipboard(this, '9289323556@upi')">
                                         <i class="fas fa-copy"></i>
                                     </button>
                                 </div>
