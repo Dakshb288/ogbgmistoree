@@ -140,6 +140,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 trustBanner.style.display = 'none';
                 browseCta.style.display = 'none';
             }
+
+            // Add this to your tab switching logic in the event listener
+            const floatingCta = document.querySelector('.floating-cta');
+            
+            // Show/hide floating CTA only in proofs section
+            if (tabName === 'proofs') {
+                floatingCta.classList.add('active');
+            } else {
+                floatingCta.classList.remove('active');
+            }
         });
     });
 
@@ -155,7 +165,12 @@ document.addEventListener('DOMContentLoaded', function() {
         {
             id: 1,
             title: 'TEST',
-            price: 999999,
+            price: 99999,
+            flashDeal: {
+                active: false,
+                originalPrice: 1299999,
+                endsIn: "2h"  // Simple text display
+            },
             images: ['./assets/accounts/does-anyone-know-who-this-is-some-people-say-its-cj-but-v0-3pk9b5dgj5va1.jpg.webp'],
             status: 'available',
             level: 75,
@@ -183,6 +198,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
                     <div class="image-overlay"></div>
                     <span class="status ${account.status}">${account.status.toUpperCase()}</span>
+                    ${account.flashDeal && account.flashDeal.active ? `
+                        <span class="flash-deal-badge">
+                            <i class="fas fa-bolt"></i> FLASH DEAL
+                        </span>
+                    ` : ''}
                     <div class="account-meta">
                         <span class="meta-item">
                             <i class="fas fa-gamepad"></i>
@@ -203,8 +223,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         </span>
                     </div>
                     <div class="price-section">
-                        <p class="price">₹${account.price}</p>
-                        <span class="price-tag">${account.status === 'sold' ? 'Sold Out' : 'Best Value'}</span>
+                        <div class="price-wrapper">
+                            <p class="price">₹${account.price}</p>
+                            ${account.flashDeal && account.flashDeal.active ? `
+                                <p class="original-price">₹${account.flashDeal.originalPrice}</p>
+                            ` : ''}
+                        </div>
+                        <span class="price-tag">
+                            ${account.flashDeal && account.flashDeal.active ? `
+                                <i class="fas fa-clock"></i> ${account.flashDeal.endsIn}
+                            ` : account.status === 'sold' ? 'Sold Out' : 'Best Value'}
+                        </span>
                     </div>
                     <div class="action-buttons">
                         ${account.status === 'available' ? `
@@ -243,6 +272,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
                     <div class="image-overlay"></div>
                     <span class="status ${account.status}">${account.status.toUpperCase()}</span>
+                    ${account.flashDeal && account.flashDeal.active ? `
+                        <span class="flash-deal-badge">
+                            <i class="fas fa-bolt"></i> FLASH DEAL
+                        </span>
+                    ` : ''}
                     <div class="account-meta">
                         <span class="meta-item">
                             <i class="fas fa-gamepad"></i>
@@ -263,8 +297,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         </span>
                     </div>
                     <div class="price-section">
-                        <p class="price">₹${account.price}</p>
-                        <span class="price-tag">${account.status === 'sold' ? 'Sold Out' : 'Best Value'}</span>
+                        <div class="price-wrapper">
+                            <p class="price">₹${account.price}</p>
+                            ${account.flashDeal && account.flashDeal.active ? `
+                                <p class="original-price">₹${account.flashDeal.originalPrice}</p>
+                            ` : ''}
+                        </div>
+                        <span class="price-tag">
+                            ${account.flashDeal && account.flashDeal.active ? `
+                                <i class="fas fa-clock"></i> ${account.flashDeal.endsIn}
+                            ` : account.status === 'sold' ? 'Sold Out' : 'Best Value'}
+                        </span>
                     </div>
                     <div class="action-buttons">
                         ${account.status === 'available' ? `
@@ -281,6 +324,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
         `).join('');
+
+        // Start the countdown timer
+        if (filteredAccounts.some(acc => acc.flashDeal?.active)) {
+            setInterval(updateAccountTimers, 1000);
+        }
     }
 
     filterButtons.forEach(btn => {
@@ -359,6 +407,43 @@ document.addEventListener('DOMContentLoaded', function() {
             tab.classList.add('active');
         });
     }
+
+    // Update the proofs data - remove customer field
+    const proofs = [
+        {
+            id: 1,
+            title: "GLACIER M416 ACCOUNT SOLD",
+            image: "./assets/proofs/dhrix2.jpg",
+            rating: 5,
+            comment: "Trusted seller! Got my Glacier M416 account instantly ⭐️"
+        }
+    ];
+
+    // Update the render function - remove customer span
+    function renderProofs() {
+        const proofsGrid = document.querySelector('.proofs-grid');
+        if (!proofsGrid) return;
+
+        proofsGrid.innerHTML = proofs.map(proof => `
+            <div class="proof-card">
+                <div class="proof-title">
+                    <h3>${proof.title}</h3>
+                </div>
+                <div class="proof-image" onclick="showFullscreen('${proof.image}')">
+                    <img src="${proof.image}" alt="Proof ${proof.id}">
+                </div>
+                <div class="proof-content">
+                    <div class="stars">
+                        ${'⭐️'.repeat(proof.rating)}
+                    </div>
+                    <p class="comment">${proof.comment}</p>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Call renderProofs in your DOMContentLoaded event
+    renderProofs();
 });
 
 // Update the payment handling function
@@ -398,8 +483,8 @@ function initiatePayment(accountId) {
                             <div class="upi-details">
                                 <div class="upi-id">
                                     <span class="label">UPI ID:</span>
-                                    <span class="value">9289323556@fam</span>
-                                    <button class="copy-btn" onclick="copyToClipboard(this, '9289323556@upi')">
+                                    <span class="value">anasog@fam</span>
+                                    <button class="copy-btn" onclick="copyToClipboard(this, 'anasog@fam')">
                                         <i class="fas fa-copy"></i>
                                     </button>
                                 </div>
@@ -975,3 +1060,44 @@ addAccount({
 
 // Example: Marking an account as sold
 markAsSold(1); // Pass the account ID
+
+// Add this function to format the remaining time
+function formatTimeRemaining(endTime) {
+    const now = Date.now();
+    const remaining = endTime - now;
+    
+    if (remaining <= 0) return 'Ended';
+    
+    const hours = Math.floor(remaining / (60 * 60 * 1000));
+    const minutes = Math.floor((remaining % (60 * 60 * 1000)) / (60 * 1000));
+    const seconds = Math.floor((remaining % (60 * 1000)) / 1000);
+    
+    if (hours > 0) {
+        return `${hours}h ${minutes}m`;
+    }
+    return `${minutes}m ${seconds}s`;
+}
+
+// Update the render function to include dynamic countdown
+function updateAccountTimers() {
+    const timerElements = document.querySelectorAll('.flash-deal-timer');
+    timerElements.forEach(timer => {
+        const endTime = parseInt(timer.dataset.endTime);
+        timer.textContent = formatTimeRemaining(endTime);
+        
+        // Disable flash deal if time is up
+        if (endTime <= Date.now()) {
+            const accountId = parseInt(timer.dataset.accountId);
+            const account = accounts.find(acc => acc.id === accountId);
+            if (account && account.flashDeal) {
+                account.flashDeal.active = false;
+                updateAccounts(); // Re-render accounts
+            }
+        }
+    });
+}
+
+// Update the account rendering to calculate endTime
+function calculateEndTime(hours) {
+    return Date.now() + (hours * 60 * 60 * 1000);
+}
