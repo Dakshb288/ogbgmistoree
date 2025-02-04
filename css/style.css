@@ -2654,3 +2654,221 @@ html {
         opacity: 1;
     }
 }
+
+.flash-deal-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 8px 16px;
+    background: linear-gradient(45deg, #FF6B6B, #FF4141);
+    color: white;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 2;
+    animation: pulseDeal 2s infinite;
+    box-shadow: 0 4px 15px rgba(255, 65, 65, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.flash-deal-badge i {
+    font-size: 10px;
+}
+
+.price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.original-price {
+    font-size: 16px;
+    color: #FF4141;
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+@keyframes pulseDeal {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.price-tag i {
+    margin-right: 4px;
+    font-size: 12px;
+}
+
+.flash-deal-timer {
+    display: inline-block;
+    min-width: 60px;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: #FF4141;
+}
+
+.price-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.price-tag i {
+    color: #FF4141;
+}
+
+/* Simplified Proofs Section */
+.proofs-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.proofs-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.proof-label {
+    display: block;
+    font-size: 14px;
+    color: #00ffa3;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.proofs-header h2 {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    background: linear-gradient(45deg, #ffffff 20%, #00ffa3 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.proofs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding-bottom: 80px;
+}
+
+.proof-card {
+    background: rgba(28, 28, 31, 0.95);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.proof-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 255, 163, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 255, 163, 0.1);
+}
+
+.proof-title {
+    padding: 15px 15px 10px 15px;
+}
+
+.proof-title h3 {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    color: #00ffa3;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.proof-image {
+    position: relative;
+    aspect-ratio: 1/1;  /* Changed to square ratio */
+    overflow: hidden;
+    cursor: zoom-in;
+}
+
+.proof-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.proof-content {
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stars {
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.comment {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+.customer {
+    color: #00ffa3;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Simplified Floating CTA Button */
+.floating-cta {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #00ffa3;
+    color: #000000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 255, 163, 0.2);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.floating-cta.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.floating-cta i {
+    font-size: 16px;
+}
+
+.floating-cta:hover {
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 163, 0.3);
+}
+
+/* Remove these unused styles */
+.cta-glow {
+    display: none;
+}
