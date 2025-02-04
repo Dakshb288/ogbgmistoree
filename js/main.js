@@ -23,7 +23,7 @@ function checkTelegramWebApp() {
                     This store can only be accessed through Telegram.<br>
                     Please open it using our Telegram bot:
                 </p>
-                <a href="https://t.me/OgbgmiSTOREE_bot" style="
+                <a href="https://t.me/ogbgmistore_bot" style="
                     display: inline-block;
                     margin-top: 20px;
                     padding: 12px 24px;
