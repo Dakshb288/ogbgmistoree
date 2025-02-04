@@ -203,6 +203,19 @@
                 </button>
             </div>
         </section>
+
+        <!-- Proofs Tab Content -->
+        <section id="proofs-tab" class="tab-content">
+            <div class="proofs-container">
+                <div class="proofs-header">
+                    <span class="proof-label">TAKE A LOOK AT</span>
+                    <h2>OUR RECENT DEALS</h2>
+                </div>
+                <div class="proofs-grid">
+                    <!-- Proofs will be added here dynamically -->
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Bottom Navigation -->
@@ -211,11 +224,22 @@
             <i class="fas fa-home"></i>
             <span>Home</span>
         </button>
+        <button class="nav-btn" data-tab="proofs">
+            <i class="fas fa-check-circle"></i>
+            <span>Proofs</span>
+        </button>
         <button class="nav-btn" data-tab="profile">
             <i class="fas fa-user"></i>
             <span>Profile</span>
         </button>
     </nav>
+
+    <!-- Add this before the bottom-nav -->
+    <button class="floating-cta" onclick="document.querySelector('[data-tab=\'home\']').click()">
+        <i class="fas fa-shopping-cart"></i>
+        BUY YOUR'S NOW!
+        <span class="cta-glow"></span>
+    </button>
 
     <!-- Modals -->
     <div id="details-modal" class="modal">
