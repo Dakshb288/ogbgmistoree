@@ -164,27 +164,36 @@ document.addEventListener('DOMContentLoaded', function() {
     accounts = [
         {
             id: 1,
-            title: 'TEST',
-            price: 99999,
+            title: 'BGMI PREMIUM ID WITH 106 MYTHICS',
+            price: 'SEND OFFERS',
             flashDeal: {
                 active: false,
-                originalPrice: 1299999,
-                endsIn: "2h"  // Simple text display
+                originalPrice: null,
+                endsIn: null
             },
-            images: ['./assets/accounts/does-anyone-know-who-this-is-some-people-say-its-cj-but-v0-3pk9b5dgj5va1.jpg.webp'],
+            images: [
+                './assets/accounts/acc1pic1.jpg',
+                './assets/accounts/acc1pic2.jpg',
+                './assets/accounts/acc1pic3.jpg',
+                './assets/accounts/acc1pic4.jpg',
+                './assets/accounts/acc1pic5.jpg',
+                './assets/accounts/acc1pic6.jpg',
+                './assets/accounts/acc1pic8.jpg',
+                './assets/accounts/acc1pic9.jpg'
+            ],
             status: 'available',
-            level: 75,
-            royalPass: true,
-            loginType: 'Facebook',
+            level: 85,
+            royalPass: false,
+            loginType: 'Twitter',
             details: {
-                'Account Level': '75',
-                'Royal Pass': 'Purchased',
-                'Mythic Outfits': '8',
-                'Gun Skins': '15+',
+                'Account Level': '85',
+                'Royal Pass': 'Not Purchased',
+                'Mythic Outfits': '106',
+                'Gun Skins': '18+ Gunlabs',
                 'Achievement Points': '3500+',
-                'Login Methods': '2 (Facebook + X)'
+                'Login Methods': '1 (X)'
             },
-            description: 'Testing hori hai bhayankar'
+            description: 'BGMI PREMIUM ID WITH 106 MYTHICS + SILVANUS XSUIT LEVEL 1 + WHITE HITMAN SET + THE SEVEN SEAS SET + DARK ASSASIN SET + MELODIC FELINE SET + VEGITO SET + + BULMA CHARACTER SET + HOT PIZZA UNIFORM + NIGHT PHANTASMA SET + NIGHT PHANTASMA UAZ LEVEL 2 [3 ENGINE CORE AVAILABLE] + MCLAREN P1 [VOLCANO YELLOW] + TOTAL 18 GUNLABS  SHINOBI LEVEL 5 + GLACIER SCARL LEVEL 4 + ACE32 LEVEL 4 + 4 BIG MATERIAL + 7x CONQUEROR 3x OLD CONQUEROR [S12 , S13 , S15] ALL T+F + BEAR PET + FALCON MAX + GODZILLA BAGPACK [RARE] + 2x MYTHIC BAGPACKS + MANY MORE RARE STUFF'
         },
     ];
 
@@ -224,22 +233,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="price-section">
                         <div class="price-wrapper">
-                            <p class="price">₹${account.price}</p>
-                            ${account.flashDeal && account.flashDeal.active ? `
-                                <p class="original-price">₹${account.flashDeal.originalPrice}</p>
-                            ` : ''}
+                            <p class="price">${isNaN(account.price) ? account.price : (account.price.toString().startsWith('₹') ? account.price : '₹' + account.price)}</p>
                         </div>
                         <span class="price-tag">
                             ${account.flashDeal && account.flashDeal.active ? `
                                 <i class="fas fa-clock"></i> ${account.flashDeal.endsIn}
-                            ` : account.status === 'sold' ? 'Sold Out' : 'Best Value'}
+                            ` : account.status === 'sold' ? 'Sold Out' : 'Send Offers'}
                         </span>
                     </div>
                     <div class="action-buttons">
                         ${account.status === 'available' ? `
                             <button class="btn-buy" onclick="initiatePayment(${account.id})">
-                                <i class="fas fa-shopping-cart"></i>
-                                BUY NOW
+                                <i class="fas ${isNaN(account.price) ? 'fa-message' : 'fa-shopping-cart'}"></i>
+                                ${isNaN(account.price) ? 'SEND OFFER' : 'BUY NOW'}
                             </button>
                         ` : ''}
                         <button class="btn-view" onclick="viewDetails(${account.id})" style="${account.status === 'sold' ? 'grid-column: 1 / -1;' : ''}">
@@ -298,22 +304,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="price-section">
                         <div class="price-wrapper">
-                            <p class="price">₹${account.price}</p>
-                            ${account.flashDeal && account.flashDeal.active ? `
-                                <p class="original-price">₹${account.flashDeal.originalPrice}</p>
-                            ` : ''}
+                            <p class="price">${isNaN(account.price) ? account.price : (account.price.toString().startsWith('₹') ? account.price : '₹' + account.price)}</p>
                         </div>
                         <span class="price-tag">
                             ${account.flashDeal && account.flashDeal.active ? `
                                 <i class="fas fa-clock"></i> ${account.flashDeal.endsIn}
-                            ` : account.status === 'sold' ? 'Sold Out' : 'Best Value'}
+                            ` : account.status === 'sold' ? 'Sold Out' : 'Send Offers'}
                         </span>
                     </div>
                     <div class="action-buttons">
                         ${account.status === 'available' ? `
                             <button class="btn-buy" onclick="initiatePayment(${account.id})">
-                                <i class="fas fa-shopping-cart"></i>
-                                BUY NOW
+                                <i class="fas ${isNaN(account.price) ? 'fa-message' : 'fa-shopping-cart'}"></i>
+                                ${isNaN(account.price) ? 'SEND OFFER' : 'BUY NOW'}
                             </button>
                         ` : ''}
                         <button class="btn-view" onclick="viewDetails(${account.id})" style="${account.status === 'sold' ? 'grid-column: 1 / -1;' : ''}">
@@ -451,6 +454,21 @@ function initiatePayment(accountId) {
     const account = accounts.find(acc => acc.id === accountId);
     if (!account) return;
 
+    // If price is not numeric, directly open chat for price discussion
+    if (isNaN(account.price)) {
+        const message = `✨ PRICE ENQUIRY ✨
+
+🎮 Interested in: ${account.title}
+
+💫 Please share your best offer.`;
+        
+        if (window.Telegram?.WebApp) {
+            const encodedMessage = encodeURIComponent(message);
+            window.Telegram.WebApp.openLink(`https://t.me/Ehean4s?text=${encodedMessage}`);
+        }
+        return;
+    }
+
     const paymentModal = document.getElementById('payment-modal');
     paymentModal.innerHTML = `
         <div class="modal-content payment-content">
@@ -559,14 +577,12 @@ function goToProfile() {
     document.querySelector('[data-tab="profile"]').click();
 }
 
-// Update viewDetails function
+// Update viewDetails function with improved carousel
 function viewDetails(accountId) {
-    const account = accounts.find(a => a.id === accountId);
+    const account = accounts.find(acc => acc.id === accountId);
     if (!account) return;
 
     const modal = document.getElementById('details-modal');
-    
-    // Update modal content
     const modalContent = `
         <div class="modal-content">
             <div class="modal-header">
@@ -585,8 +601,8 @@ function viewDetails(accountId) {
                         `).join('')}
                     </div>
                     <div class="carousel-nav">
-                        ${account.images.map((_, i) => `
-                            <span class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>
+                        ${account.images.map((_, index) => `
+                            <span class="carousel-dot ${index === 0 ? 'active' : ''}" data-index="${index}"></span>
                         `).join('')}
                     </div>
                 </div>
@@ -624,61 +640,71 @@ function viewDetails(accountId) {
     
     showModal('details-modal');
 
-    // Initialize swipeable carousel
+    // Initialize improved carousel
     const carousel = modal.querySelector('.account-carousel');
     const dots = modal.querySelectorAll('.carousel-dot');
     let currentSlide = 0;
-    let startX;
-    let currentX;
+    let startX = null;
+    let isDragging = false;
 
-    // Touch events for mobile
+    function goToSlide(index) {
+        currentSlide = index;
+        carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentSlide);
+        });
+    }
+
+    // Touch events
     carousel.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
-        currentX = carousel.style.transform ? 
-            parseInt(carousel.style.transform.replace('translateX(', '')) : 0;
+        isDragging = true;
+        carousel.style.transition = 'none';
     });
 
     carousel.addEventListener('touchmove', (e) => {
-        if (!startX) return;
-        const diff = e.touches[0].clientX - startX;
-        const newX = currentX + diff;
-        carousel.style.transform = `translateX(${newX}px)`;
+        if (!isDragging) return;
+        
+        const x = e.touches[0].clientX;
+        const walk = (x - startX) / carousel.offsetWidth * 100;
+        const translate = -currentSlide * 100 + walk;
+        
+        // Limit sliding to adjacent slides only
+        if (translate <= 0 && translate >= -((account.images.length - 1) * 100)) {
+            carousel.style.transform = `translateX(${translate}%)`;
+        }
     });
 
-    carousel.addEventListener('touchend', (e) => {
-        const diff = e.changedTouches[0].clientX - startX;
-        const threshold = carousel.offsetWidth / 4;
+    function handleDragEnd(e) {
+        if (!isDragging) return;
         
-        if (Math.abs(diff) > threshold) {
-            if (diff > 0 && currentSlide > 0) {
+        isDragging = false;
+        carousel.style.transition = 'transform 0.3s ease-out';
+        
+        const x = e.type === 'touchend' ? e.changedTouches[0].clientX : e.clientX;
+        const walk = (x - startX) / carousel.offsetWidth * 100;
+        
+        if (Math.abs(walk) > 20) { // 20% threshold for slide change
+            if (walk > 0 && currentSlide > 0) {
                 currentSlide--;
-            } else if (diff < 0 && currentSlide < account.images.length - 1) {
+            } else if (walk < 0 && currentSlide < account.images.length - 1) {
                 currentSlide++;
             }
         }
         
-        updateSlide();
-        startX = null;
-    });
-
-    // Click events for dots
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            currentSlide = index;
-            updateSlide();
-        });
-    });
-
-    function updateSlide() {
-        const offset = -currentSlide * 100;
-        carousel.style.transform = `translateX(${offset}%)`;
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentSlide);
-        });
+        goToSlide(currentSlide);
     }
 
+    carousel.addEventListener('touchend', handleDragEnd);
+    carousel.addEventListener('touchcancel', handleDragEnd);
+
+    // Dot navigation
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => goToSlide(index));
+    });
+
     // Initialize first slide
-    updateSlide();
+    goToSlide(0);
 }
 
 // Add this new function
@@ -686,14 +712,109 @@ function showFullscreen(imageSrc) {
     const fullscreenModal = document.getElementById('fullscreen-modal');
     const fullscreenImage = document.getElementById('fullscreen-image');
     
-    fullscreenImage.src = imageSrc;
+    // Find the current account and image index
+    const account = accounts.find(acc => acc.images.includes(imageSrc));
+    if (!account) return;
+    
+    const currentIndex = account.images.indexOf(imageSrc);
+    
+    // Update modal content to include navigation
+    fullscreenModal.innerHTML = `
+        <div class="fullscreen-content">
+            <img src="${imageSrc}" alt="Fullscreen view" id="fullscreen-image">
+            ${account.images.length > 1 ? `
+                <button class="nav-btn prev" ${currentIndex === 0 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="nav-btn next" ${currentIndex === account.images.length - 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="image-counter">${currentIndex + 1} / ${account.images.length}</div>
+            ` : ''}
+            <button class="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    
     showModal('fullscreen-modal');
 
-    // Close on clicking the close button
+    // Add navigation functionality
+    if (account.images.length > 1) {
+        const prevBtn = fullscreenModal.querySelector('.nav-btn.prev');
+        const nextBtn = fullscreenModal.querySelector('.nav-btn.next');
+        const fullscreenImg = fullscreenModal.querySelector('#fullscreen-image');
+        let currentImageIndex = currentIndex;
+
+        // Previous button click
+        prevBtn?.addEventListener('click', () => {
+            if (currentImageIndex > 0) {
+                currentImageIndex--;
+                fullscreenImg.src = account.images[currentImageIndex];
+                updateNavButtons();
+            }
+        });
+
+        // Next button click
+        nextBtn?.addEventListener('click', () => {
+            if (currentImageIndex < account.images.length - 1) {
+                currentImageIndex++;
+                fullscreenImg.src = account.images[currentImageIndex];
+                updateNavButtons();
+            }
+        });
+
+        // Swipe functionality
+        let startX = null;
+        let isDragging = false;
+
+        fullscreenModal.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        });
+
+        fullscreenModal.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault(); // Prevent scrolling while swiping
+        });
+
+        fullscreenModal.addEventListener('touchend', (e) => {
+            if (!isDragging) return;
+            
+            const endX = e.changedTouches[0].clientX;
+            const diffX = endX - startX;
+            
+            if (Math.abs(diffX) > 50) { // Minimum swipe distance
+                if (diffX > 0 && currentImageIndex > 0) {
+                    // Swipe right - show previous
+                    currentImageIndex--;
+                    fullscreenImg.src = account.images[currentImageIndex];
+                } else if (diffX < 0 && currentImageIndex < account.images.length - 1) {
+                    // Swipe left - show next
+                    currentImageIndex++;
+                    fullscreenImg.src = account.images[currentImageIndex];
+                }
+                updateNavButtons();
+            }
+            
+            isDragging = false;
+        });
+
+        function updateNavButtons() {
+            prevBtn.disabled = currentImageIndex === 0;
+            nextBtn.disabled = currentImageIndex === account.images.length - 1;
+            const counter = fullscreenModal.querySelector('.image-counter');
+            if (counter) {
+                counter.textContent = `${currentImageIndex + 1} / ${account.images.length}`;
+            }
+        }
+    }
+
+    // Close button functionality
     const closeBtn = fullscreenModal.querySelector('.modal-close');
     closeBtn.onclick = () => hideModal('fullscreen-modal');
 
-    // Close on clicking outside the image
+    // Close on background click
     fullscreenModal.onclick = (e) => {
         if (e.target === fullscreenModal) {
             hideModal('fullscreen-modal');
